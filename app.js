@@ -127,14 +127,24 @@ function onLoadCartQuantity() {
     }
 }
 
-function removeProductFromCart(index) {
+function removeProductFromCart(index,qty) {
     let getProductsInCart = localStorage.getItem('setProductsInCart')
     getProductsInCart = JSON.parse(getProductsInCart)
 
+console.log("this is cart page ",qty)
 
     let confirmation=confirm("Do you want to remove the product from cart")
     if(confirmation){
-        localStorage.setItem('setProductsInCart', JSON.stringify(getProductsInCart.slice(index,1)))
+        if(getProductsInCart.length > 1){
+            localStorage.setItem('setProductsInCart', JSON.stringify(getProductsInCart.slice(index,1)))
+            let getCartQ = localStorage.getItem('cartQ')
+            localStorage.setItem('cartQ', getCartQ - qty)
+
+
+        }else{
+            localStorage.setItem('setProductsInCart', null)
+        }
+       
         window.location.reload();
 
     }
@@ -145,8 +155,10 @@ function removeFromCart(id, title, price, desc, url, qty) {
     let getCartQ = localStorage.getItem('cartQ')
     if (getCartQ) {
         getCartQ = parseInt(getCartQ)
-        localStorage.setItem('cartQ', getCartQ - 1)
+       
+            localStorage.setItem('cartQ', getCartQ - 1)
         document.querySelector('.cart-menu span').textContent = getCartQ - 1
+        
     } else {
         localStorage.setItem('cartQ', 1)
     }
@@ -175,6 +187,7 @@ function removeItemsFromCart(product) {
                 getProductsInCart[product.id].qty -= 1
                 getProductsInCart[product.id].price -= allProducts[product.id].price
             }
+           
 
         }
 
@@ -194,8 +207,10 @@ function addToCart(id, title, price, desc, url, qty) {
     let getCartQ = localStorage.getItem('cartQ')
     if (getCartQ) {
         getCartQ = parseInt(getCartQ)
+       
         localStorage.setItem('cartQ', getCartQ + 1)
         document.querySelector('.cart-menu span').textContent = getCartQ + 1
+
     } else {
         localStorage.setItem('cartQ', 1)
     }
@@ -296,7 +311,7 @@ function displayProductOnCartPage() {
                 ${element.price}
                 </td>
                 <td class="actions" data-th >
-                  <button class="btn btn-danger btn-sm" onclick="removeProductFromCart('${index}')">
+                  <button class="btn btn-danger btn-sm" onclick="removeProductFromCart('${index}','${element.qty}')">
                    Trash
                   </button>
                 </td>

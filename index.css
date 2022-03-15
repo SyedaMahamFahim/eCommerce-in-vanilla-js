@@ -187,6 +187,13 @@ body{
     
 }
 
+/* Alert box start */
+
+.product-alert-box{
+    width: 25%;
+}
+/* Alert Box end */
+
 /* All Products Start*/
 
 .shop-page{
