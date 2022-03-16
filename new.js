@@ -317,9 +317,9 @@ function displayProductOnCartPage() {
 }
 
 
-displayProductOnCartPage()
+
 displayProducts()
 onLoadCartQuantity()
-
+displayProductOnCartPage()
 
 
